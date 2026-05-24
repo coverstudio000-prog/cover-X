@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cover-X | Premium Cover Music</title>
+    <style>
+        /* Premium Fonts Import */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght=300;400;600&family=Playfair+Display:ital,wght=0,600;1,400&display=swap');
+        
+        :root {
+            --gold: #D4AF37;
+            --black: #050505;
+            --glass-bg: rgba(10, 10, 10, 0.65); /* Elegant semi-transparent dark */
+            --glass-border: rgba(212, 175, 55, 0.15);
+            --text: #ffffff;
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Music Audio Waves Base Layout */
+        .audio-wave {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 40px;
+            gap: 6px;
+            margin-bottom: 25px;
+        }
+
+        /* Wave Bars wala Style eka සහ Glow Effect eka */
+        .audio-wave span {
+            width: 6px;
+            background: #D4AF37; /* Gold Color */
+            box-shadow: 0 0 10px #D4AF37; /* Glowing Effect */
+            animation: bounce 1.2s ease-in-out infinite alternate;
+            border-radius: 5px;
+        }
+
+        .audio-wave span:nth-child(1) { height: 17px; animation-delay: 0.2s; }
+        .audio-wave span:nth-child(2) { height: 35px; animation-delay: 0.4s; }
+        .audio-wave span:nth-child(3) { height: 20px; animation-delay: 0.2s; }
+        .audio-wave span:nth-child(4) { height: 40px; animation-delay: 0.6s; }
+        .audio-wave span:nth-child(5) { height: 15px; animation-delay: 0.3s; }
+        .audio-wave span:nth-child(6) { height: 30px; animation-delay: 0.5s; }
+
+        /* Animation Effect eka */
+        @keyframes bounce {
+          40% { transform: scaleY(0.3); }
+           100% { transform: scaleY(1.5); }
+        }
+
+        /* Fixed Background Layout with Cinematic Glass Blur Effect */
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--black); 
+            color: var(--text); 
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Background Image Wrapper to apply full glass blur without affecting text sharpness */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('banner.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: blur(12px) brightness(0.4); /* Strong premium glass blur & subtle darkness */
+            z-index: -2;
+            transform: scale(1.05); /* Prevents white edges during blur */
+        }
+
+        /* Subtle dark overlay for premium depth */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, transparent 20%, rgba(5,5,5,0.8) 80%);
+            z-index: -1;
+        }
+        
+        h1, h2, h3 { 
+            font-family: 'Playfair Display', serif; 
+            color: var(--gold); 
+        }
+        
+        /* Floating Glassmorphism Navbar */
+        header { 
+            background: rgba(10, 10, 10, 0.5); 
+            padding: 20px 50px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: fixed; 
+            width: 100%; 
+            top: 0; 
+            z-index: 100; 
+            border-bottom: 1px solid var(--glass-border); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            animation: slideDown 1s ease-out;
+        }
+        
+        header h1 { 
+            font-size: 32px; 
+            letter-spacing: 2px; 
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        nav a { 
+            color: #e0e0e0; 
+            text-decoration: none; 
+            margin-left: 35px; 
+            font-weight: 600; 
+            transition: 0.3s ease-in-out; 
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        nav a:hover { 
+            color: var(--gold); 
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8); 
+        }
+        
+        /* Hero Section - The only section where banner is completely visible and crisp */
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            background: linear-gradient(rgba(0,0,0,0.1) 0%, rgba(5,5,5,0.5) 70%, rgba(5,5,5,1) 100%), url('banner.png');
+            background-size: cover;
+            background-position: center;
+            padding: 0 20px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+        
+        .hero h2 { 
+            font-size: 75px; 
+            margin-bottom: 20px; 
+            text-shadow: 0 0 35px rgba(0, 0, 0, 0.9), 0 5px 20px rgba(212, 175, 55, 0.3);
+            font-weight: bold;
+        }
+        
+        .hero p { 
+            font-size: 20px; 
+            max-width: 700px; 
+            margin-bottom: 40px; 
+            line-height: 1.8; 
+            color: #ffffff;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
+            font-weight: 400;
+        }
+
+        /* HYPER-ATTRACTIVE FLASHING WATCH NOW BUTTON */
+        .btn { 
+            position: relative;
+            padding: 16px 45px; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px; 
+            font-weight: bold; 
+            text-decoration: none; 
+            color: #050505; 
+            background: linear-gradient(135deg, #f1c40f 0%, #d4af37 50%, #b8962d 100%);
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: inline-block;
+            overflow: hidden;
+            
+            /* 3D Base Shadow */
+            box-shadow: 0 6px 0 #8c7322, 
+                        0 15px 25px rgba(212, 175, 55, 0.3);
+            
+            /* Always-on Attention Grabber Animations */
+            animation: pulseGlow 2s infinite ease-in-out;
+            transition: all 0.2s ease;
+        }
+        
+        /* Fixed & Perfect Left-to-Right Continuous Shimmer Effect */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; 
+            left: -150%; /* Starts completely outside the left side */
+            width: 60%; 
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.6), 
+                transparent
+            );
+            transform: skewX(-25deg);
+            /* Infinite shimmering loop even without touching the mouse */
+            animation: shineSweep 2.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 1. LEFT TO RIGHT CONTINUOUS SHINE KEYFRAME */
+        @keyframes shineSweep {
+            0% {
+                left: -150%;
+            }
+            50% {
+                left: 150%; /* Sweeps flawlessly across the entire button to the right */
+            }
+            100% {
+                left: 150%; /* Gives a small pause before restarting the next shine loop */
+            }
+        }
+
+        /* 2. AUTOMATIC PULSING & FLASHING GLOW KEYFRAME (No Mouse Needed) */
+        @keyframes pulseGlow {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 6px 0 #8c7322, 0 15px 25px rgba(212, 175, 55, 0.3);
+            }
+            50% {
+                transform: scale(1.04); /* Subtle heartbeat pulse to create psychological curiosity */
+                box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6), 0 0 30px rgba(212, 175, 55, 0.5);
+                filter: brightness(1.15); /* Flashes slightly brighter at the peak of the pulse */
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 6px 0 #8c7322, 0 15px 25px rgba(212, 175, 55, 0.3);
+            }
+        }
+
+        /* Hover & Active over-rides for tactile control */
+        .btn:hover { 
+            filter: brightness(1.2);
+        }
+        
+        .btn:active { 
+            transform: translateY(4px) scale(0.98); 
+            box-shadow: 0 2px 0 #8c7322, 0 5px 10px rgba(0,0,0,0.5);
+        }
+        
+        /* Scroll Revealed Sections */
+        .section { 
+            padding: 120px 10%; 
+            text-align: center; 
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section h2 { 
+            font-size: 45px; 
+            margin-bottom: 50px; 
+            text-shadow: 0 4px 15px rgba(0,0,0,0.7);
+        }
+        
+        /* Premium Frosted Glass Container for Text Content */
+        .about-content { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            font-size: 16px; 
+            line-height: 1.9; 
+            color: #ffffff; 
+            text-align: left; 
+            background: var(--glass-bg); 
+            padding: 50px; 
+            border: 1px solid var(--glass-border);
+            border-left: 5px solid var(--gold); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+        }
+        
+        /* 4-Column Glassy Video Grid Layout */
+        .video-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
+            margin-top: 50px; 
+        }
+        
+        .video-card { 
+            background: var(--glass-bg); 
+            padding: 15px; 
+            border: 1px solid var(--glass-border); 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            text-align: left;
+            text-decoration: none;
+            display: block;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+        
+        .video-card:hover { 
+            transform: translateY(-12px) scale(1.02); 
+            border-color: var(--gold); 
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25); 
+        }
+        
+        /* Thumbnail Image Container */
+        .thumb-container {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 2px;
+        }
+
+        .thumb-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            transition: 0.3s;
+        }
+
+        .video-card:hover .thumb-container::before {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Gold Overlay Play Button */
+        .play-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(5, 5, 5, 0.85);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+            z-index: 2;
+        }
+
+        .play-btn::after {
+            content: '';
+            display: block;
+            width: 0; height: 0;
+            border-style: solid;
+            border-width: 8px 0 8px 14px;
+            border-color: transparent transparent transparent var(--gold);
+            margin-left: 3px;
+        }
+
+        .video-card:hover .play-btn {
+            background: var(--gold);
+            transform: scale(1.15);
+            box-shadow: 0 0 20px var(--gold);
+        }
+
+        .video-card:hover .play-btn::after {
+            border-color: transparent transparent transparent var(--black);
+        }
+        
+        .video-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px; 
+            font-weight: 600;
+            margin-top: 15px; 
+            color: #ffffff; 
+            transition: 0.3s;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .video-card:hover .video-title {
+            color: var(--gold);
+        }
+        
+        /* Premium Frosted Glass Footer */
+        footer { 
+            background: rgba(10, 10, 10, 0.85); 
+            text-align: center; 
+            padding: 40px; 
+            border-top: 1px solid var(--glass-border); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            margin-top: 50px;
+        }
+        
+        footer p { 
+            color: #aaa; 
+            font-size: 14px; 
+        }
+
+        /* ANIMATIONS KEYFRAMES */
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { filter: blur(10px); opacity: 0; }
+            to { filter: blur(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<audio id="epic-bg-music" loop>
+    <source src="epic-music.mp3" type="audio/mpeg">
+</audio>
+
+    <header>
+        <h1>𝖢𝖷 </h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#music">Music</a>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h2>𝒞𝑜𝓋𝑒𝓇-𝒳 𝑀𝓊𝓈𝒾𝒸</h2>
+        <p>Feel the Music, Live the Emotion. Experience high-quality, cinematic audio and visual cover masterpieces tailored for true music lovers.</p>
+        
+        <div class="audio-wave">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        
+        <a href="#music" class="btn">Watch Now</a>
+    </section>
+
+    <section id="about" class="section">
+        <h2>Advanced Audio Experience</h2>
+        <div class="about-content">
+            <p><strong>Cover-X</strong> is dedicated to crafting a hyper-realistic audio engineering experience. We don't just record songs; we redefine them. Capturing the raw emotion of every vocal take and the intricate details of each instrument is at the core of our production.</p><br>
+            <p>Our workflow integrates high-end vocal tuning, cinematic background scoring, and analog-modeled mixing techniques to deliver a studio-grade listening experience. Whether it's an intricate acoustic arrangement or a full-band cover, every track is engineered to perfection.</p>
+        </div>
+    </section>
+
+    <section id="music" class="section">
+        <h2>Latest YouTube Covers</h2>
+        <p style="color: #ccc; max-width: 600px; margin: 0 auto; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">Check out the latest releases directly from the Cover-X YouTube channel. High-quality audio meets cinematic visuals.</p>
+        
+        <div class="video-grid">
+            
+            <a href="https://youtu.be/Pl51e6qXdFI?si=IJ_IGY-nG9P9Ce1t" target="_blank" class="video-card">
+                <div class="thumb-container" style="background-image: url('https://img.youtube.com/vi/Pl51e6qXdFI/maxresdefault.jpg');">
+                    <div class="play-btn"></div>
+                </div>
+                <div class="video-title">Dewaduthiyak Cover</div>
+            </a>
+            
+            <a href="https://youtu.be/3X6kNuIL83s?si=31MVZ1JxbjbkL3Il" target="_blank" class="video-card">
+                <div class="thumb-container" style="background-image: url('https://img.youtube.com/vi/3X6kNuIL83s/maxresdefault.jpg');">
+                    <div class="play-btn"></div>
+                </div>
+                <div class="video-title">Cover Song Title 2</div>
+            </a>
+            
+            <a href="https://youtu.be/HhvOVqjOF2g?si=-jtWrdli2cpK_ri3" target="_blank" class="video-card">
+                <div class="thumb-container" style="background-image: url('https://img.youtube.com/vi/HhvOVqjOF2g/maxresdefault.jpg');">
+                    <div class="play-btn"></div>
+                </div>
+                <div class="video-title">Cover Song Title 3</div>
+            </a>
+
+            <a href="https://youtu.be/H8H4I9cgtoI?si=RNKVQuCay0SdeCUR" target="_blank" class="video-card">
+                <div class="thumb-container" style="background-image: url('https://img.youtube.com/vi/H8H4I9cgtoI/maxresdefault.jpg');">
+                    <div class="play-btn"></div>
+                </div>
+                <div class="video-title">Cover Song Title 4</div>
+            </a>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Cover-X by Ranwalage Don Pramod Kavindu Sathsara. All Rights Reserved.</p>
+    </footer>
+
+   <script>
+    // Music element එක select කර ගැනීම
+    const bgMusic = document.getElementById('epic-bg-music');
+    // Music එක එක පාරක් play වුණාද නැද්ද කියලා check කරන්න variable එකක්
+    let musicStarted = false;
+
+    document.querySelectorAll('nav a, .btn').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            
+            // User ඕනෑම තැනක් click කරපු ගමන් background music එක play කරන්න
+            if (!musicStarted && bgMusic) {
+                bgMusic.volume = 0.4; // සින්දුවේ සද්දය පොඩ්ඩක් අඩු කලා (Premium background feel එකක් එන්න)
+                bgMusic.play().catch(error => console.log("Autoplay blocked by browser:", error));
+                musicStarted = true;
+            }
+
+            if(targetId.startsWith('#')) {
+                e.preventDefault();
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Scroll revealed sections logic (පරණ එකමයි)
+    const sections = document.querySelectorAll('.section');
+    const revealOnScroll = () => {
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            if (sectionTop < windowHeight * 0.85) {
+                section.classList.add('revealed');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+</script>
+
+</body>
+</html>
